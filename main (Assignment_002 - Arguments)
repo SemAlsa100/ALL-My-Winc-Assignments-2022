@@ -1,0 +1,92 @@
+# Do not modify these lines
+__winc_id__ = '7b9401ad7f544be2a23321292dd61cb6'
+__human_name__ = 'arguments'
+
+# Add your code after this line
+# *********************************************************************
+
+
+def greet(name: str, greet_template: str = 'Hello, <name>!'):
+
+    if name != None and name.strip() != '':
+        greet_template = greet_template.replace('<name>', name)
+
+    return greet_template
+
+
+print(greet(''))
+print(greet('Doc'))
+print(greet('Bob', "What's up, <name>!"))
+
+# *********************************************************************
+
+print('*' * 80)
+
+
+def force(mass: float, body: str = 'earth'):
+
+    gravity = float(myDict.get(body))
+    force = mass * gravity
+
+    return force
+
+
+bodies = ['Sun', 'Jupiter', 'Neptune', 'Saturn', 'Earth',
+          'Uranus', 'Venus', 'Mars', 'Mercury', 'Moon', 'Pluto']
+print(bodies)
+print(id(bodies))
+
+bodies = [body.lower() for body in bodies]
+print(bodies)
+print(id(bodies))
+
+print(bodies)
+
+# ********************************************************
+# print('*' * 80)
+
+myDict = {'sun': 274, 'jupiter': 24.92, 'neptune': 11.15, 'saturn': 10.44, 'earth': 9.798,
+          'uranus': 8.87, 'venus': 8.87, 'mars': 3.71, 'mercury': 3.7, 'moon': 1.62, 'pluto': 0.58}
+
+bodiesList = list(myDict.keys())
+gravityList = list(myDict.values())
+
+print(bodiesList)
+print(gravityList)
+
+i = 0
+for i in range(len(gravityList)):
+    gravityList[i] = str(format(round(gravityList[i], 1), ".1f"))
+
+print(bodiesList)
+print(gravityList)
+
+for i in range(len(bodiesList)):
+    myDict.update({bodiesList[i]: gravityList[i]})
+
+print(myDict)
+
+# Call function Force
+print(force(mass=100, body='mars'))
+
+print('*' * 60)
+
+# *********************************************************************
+
+print('*' * 80)
+
+
+def pull(m1: float, m2: float, d: float):
+
+    G = 6.674 * (10 ** -11)     # G=6.674×10-11
+    print(G)
+
+    pull = G * ((m1*m2)/d**2)   # pull = G × ((m1×m2)/d2)
+    return pull
+
+
+# example: 800 kg and 1500 kg are 3 m:
+pull(m1=800, m2=1500, d=3)
+print(round(pull(m1=800, m2=1500, d=3), 6))
+
+print('*' * 60)
