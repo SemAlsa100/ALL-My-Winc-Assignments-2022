@@ -1,0 +1,95 @@
+
+__winc_id__ = "ae539110d03e49ea8738fd413ac44ba8"
+__human_name__ = "files"
+
+import os
+import os.path
+from zipfile import ZipFile
+
+
+def clean_cache():
+    cwd = os.getcwd()
+    os.chdir(cwd)
+
+    folder = "cache"
+
+    myPath = os.path.realpath('files\cache')
+
+    isFolderExist = os.path.exists(myPath)
+
+    if not isFolderExist:
+        os.mkdir(myPath)
+        print("Folder '% s' Created !" % folder)
+    else:
+        os.chdir(myPath)
+        [os.remove(f) for f in os.listdir() if os.path.isfile(f)]
+
+    # WARNING: RESET THE WORKING LIBRARY
+    os.chdir(cwd)
+
+
+def cache_zip(zip_file_path: str, cache_dir_path: str):
+
+    clean_cache()
+
+    with ZipFile(zip_file_path, 'r') as zipObj:
+        # Extract all the contents of the zip file in different directory
+        zipObj.extractall(cache_dir_path)
+        print("ZipFile is unzipped in the 'cache' folder")
+
+
+def cached_files():
+
+    cwd = os.getcwd()
+    os.chdir(cwd)
+
+    all_cache_files = []
+
+    myPath = os.path.realpath('files\cache')
+
+    for (root, dirs, files) in os.walk(myPath, topdown=True):
+        print(root)
+        print(dirs)
+
+    for myFile in files:
+        os.chdir(myPath)
+        myCacheFile = os.path.abspath(myFile)
+        all_cache_files.append(myCacheFile)
+
+    # WARNING: RESET THE WORKING LIBRARY
+    os.chdir(cwd)
+
+    return all_cache_files
+
+
+def find_password(myCacheFiles):
+    # search for 'password'
+    myPassword = ""
+    for myFile in myCacheFiles:
+        f = open(myFile, "rt")
+
+        for myTxtLine in f:
+            # print(x)
+
+            if "password" in myTxtLine.lower() and myTxtLine.count("password") == 1:
+                mySplitList = myTxtLine.split()
+                i = 0
+                for i in range(len(mySplitList)):
+                    if mySplitList[i] == "password:":
+                        myPassword = mySplitList[i+1]
+                        # break
+        f.close()
+
+    return myPassword
+
+
+if __name__ == "__main__":
+
+    clean_cache()
+
+    cache_zip('C:/Users/Papa/Documents/_Winc_Assignments/files/data.zip',
+              'C:/Users/Papa/Documents/_Winc_Assignments/files/cache')
+
+    print(f"{cached_files()= }")
+
+    print(find_password(cached_files()))
